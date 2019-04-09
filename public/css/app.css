@@ -13126,6 +13126,46 @@ a.text-muted:hover {
   box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
 }@charset "UTF-8";
 
+.text-blue {
+  color: #3490dc;
+}
+
+.text-indigo {
+  color: #6574cd;
+}
+
+.text-purple {
+  color: #9561e2;
+}
+
+.text-pink {
+  color: #f66D9b;
+}
+
+.text-red {
+  color: #e3342f;
+}
+
+.text-orange {
+  color: #f6993f;
+}
+
+.text-yellow {
+  color: #ffed4a;
+}
+
+.text-green {
+  color: #38c172;
+}
+
+.text-teal {
+  color: #4dc0b5;
+}
+
+.text-cyan {
+  color: #6cb2eb;
+}
+
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors
@@ -29534,5 +29574,19 @@ readers do not read off random characters that represent icons */
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.router-link-exact-active {
+  background: #007bff;
+  color: #ffffff !important;
+}
+
+.router-link-exact-active .nav-icon {
+  color: #ffffff !important;
+}
+
+a.nav-link:focus {
+  background: #007bff !important;
+  color: #ffffff !important;
 }
 

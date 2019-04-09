@@ -18,3 +18,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+//Should always be the last route
+Route::get('/{any}', 'HomeController@index')->where('any', '.*');
+
