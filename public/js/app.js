@@ -37289,7 +37289,7 @@ var staticRenderFns = [
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-secondary ",
+                      staticClass: "btn btn-danger",
                       attrs: { type: "button", "data-dismiss": "modal" }
                     },
                     [_vm._v("Close")]
