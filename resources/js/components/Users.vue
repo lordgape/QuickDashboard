@@ -84,6 +84,13 @@
                         </div>
 
                         <div class="form-group">
+                            <label>Confirm Password</label>
+                            <input v-model="form.password_confirmation" type="password" name="password_confirmation"
+                                   class="form-control" :class="{ 'is-invalid': form.errors.has('password_confirmation') }">
+                            <has-error :form="form" field="password_confirmation"></has-error>
+                        </div>
+
+                        <div class="form-group">
                             <label>Type</label>
                             <select v-model="form.type" type="text" id="type" name="type"
                                    class="form-control" :class="{ 'is-invalid': form.errors.has('type') }">
@@ -126,6 +133,7 @@
                   name:'',
                   email:'',
                   password:'',
+                  password_confirmation:'',
                   type:'',
                   bio:'',
                   photo:''

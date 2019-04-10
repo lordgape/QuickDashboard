@@ -28,6 +28,25 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
+        //Add validation
+
+        $this->validate($request,[
+            "name" => "required|string|max:191",
+            "email" => "required|string|max:191|email|unique:users",
+            "password" =>  [
+                            'required',
+                            'confirmed',
+                            'string',
+                            'min:8',             // must be at least 10 characters in length
+                            'regex:/[a-z]/',      // must contain at least one lowercase letter
+                            'regex:/[A-Z]/',      // must contain at least one uppercase letter
+                            'regex:/[0-9]/',      // must contain at least one digit
+                            'regex:/[@$!%*#?&]/', // must contain a special character
+                        ],
+            'password_confirmation' => 'required|min:8'
+
+        ]);
+
 
         $request['password'] = Hash::make($request['password']);
 
