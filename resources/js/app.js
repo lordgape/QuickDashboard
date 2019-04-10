@@ -9,6 +9,7 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 import { Form, HasError, AlertError } from 'vform/src'
+import moment from 'moment'
 
 window.Form = Form;
 Vue.component(HasError.name, HasError)
@@ -41,6 +42,15 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const router = new VueRouter({
     mode: 'history',
     routes // short for `routes: routes`
+})
+
+// Filters
+Vue.filter("capFirstLetter",function (text) {
+   return text.charAt(0).toUpperCase() + text.slice(1);
+});
+
+Vue.filter("companyDateFormat",function (date) {
+    return moment(date).format('MMMM Do YYYY');
 })
 
 /**

@@ -23,9 +23,9 @@
                             </tr>
                             <tr v-for="user in users" :key="user.id">
                                 <td>{{user.id}}</td>
-                                <td>{{user.name}}</td>
-                                <td>{{user.type}}</td>
-                                <td>{{user.created_at}}</td>
+                                <td>{{user.name }}</td>
+                                <td>{{user.type | capFirstLetter}}</td>
+                                <td>{{user.created_at | companyDateFormat}}</td>
                                 <td>
                                     <a href="">
                                         <i class="fa fa-edit"></i>
