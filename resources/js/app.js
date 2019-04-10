@@ -17,9 +17,22 @@ Vue.component(AlertError.name, AlertError)
 
 import VueRouter from 'vue-router'
 import VueProgressBar from 'vue-progressbar'
+import Swal from 'sweetalert2'
+
+window.swal = Swal;
+
+
+const toast = swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000
+});
+
+window.toast = toast;
 
 Vue.use(VueProgressBar, {
-    color: 'rgb(255, 14, 199)',
+    color: 'rgb(144, 255, 199)',
     failedColor: 'red',
     height: '3px'
 })

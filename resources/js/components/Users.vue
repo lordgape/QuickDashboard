@@ -150,7 +150,34 @@
           },
           createUser(){
                 this.$Progress.start();
-                this.form.post('api/users');
+                this.form.post('api/users')
+                    .then(function (data) {
+
+                        console.log('Laradata',data);
+
+                        $('#addNewUserModal').modal('hide');
+
+                        toast.fire({
+                            type:'success',
+                            title: "User Created Successfully"
+                        });
+
+                        this.$Progress.finish()
+
+                    },function (err) {
+
+                        console.log('LaraError',err);
+
+                        toast.fire({
+                            type:'error',
+                            title: "Fail to create user"
+                        });
+
+                        this.$Progress.finish()
+                    });
+
+
+
                 this.$Progress.finish()
             }
         },
