@@ -31,7 +31,7 @@
                                         <i class="fa fa-edit"></i>
                                     </a>
 
-                                    <a href="">
+                                    <a href="#" @click="deleteUser(user.id)" >
                                         <i class="fa fa-trash"></i>
                                     </a>
 
@@ -144,6 +144,47 @@
           }
         },
         methods: {
+
+          deleteUser(id){
+
+
+              Swal.fire({
+                  title: 'Are you sure?',
+                  text: "You won't be able to revert this!",
+                  type: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Yes, delete it!'
+              }).then((result) => {
+                  if (result.value) {
+
+                      this.form.delete("api/users/"+ id)
+                          .then(() => {
+
+                              Fire.$emit("loadUserEvent");
+
+                              toast.fire({
+                                  type:'success',
+                                  title: "User Deleted Successfully"
+                              });
+                          })
+                          .catch(() => {
+
+                              toast.fire({
+                                  type:'error',
+                                  title: "Oops!! Fail to delete User"
+                              });
+                          })
+
+                  }
+              });
+
+
+
+
+          },
+
           getUsers(){
 
               axios.get('api/users').then(( {data} ) => {this.users = data.data})

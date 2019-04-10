@@ -2024,16 +2024,44 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    getUsers: function getUsers() {
+    deleteUser: function deleteUser(id) {
       var _this = this;
+
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(function (result) {
+        if (result.value) {
+          _this.form["delete"]("api/users/" + id).then(function () {
+            Fire.$emit("loadUserEvent");
+            toast.fire({
+              type: 'success',
+              title: "User Deleted Successfully"
+            });
+          })["catch"](function () {
+            toast.fire({
+              type: 'error',
+              title: "Oops!! Fail to delete User"
+            });
+          });
+        }
+      });
+    },
+    getUsers: function getUsers() {
+      var _this2 = this;
 
       axios.get('api/users').then(function (_ref) {
         var data = _ref.data;
-        _this.users = data.data;
+        _this2.users = data.data;
       });
     },
     createUser: function createUser() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.$Progress.start();
       this.form.post('api/users').then(function (data) {
@@ -2044,9 +2072,9 @@ __webpack_require__.r(__webpack_exports__);
           title: "User Created Successfully"
         });
 
-        _this2.$Progress.finish();
+        _this3.$Progress.finish();
       })["catch"](function (err) {
-        _this2.$Progress.fail();
+        _this3.$Progress.fail();
 
         toast.fire({
           type: 'error',
@@ -2056,11 +2084,11 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    var _this3 = this;
+    var _this4 = this;
 
     this.getUsers();
     Fire.$on("loadUserEvent", function () {
-      _this3.getUsers();
+      _this4.getUsers();
     });
   },
   mounted: function mounted() {
@@ -58806,7 +58834,22 @@ var render = function() {
                         )
                       ]),
                       _vm._v(" "),
-                      _vm._m(2, true)
+                      _c("td", [
+                        _vm._m(2, true),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                return _vm.deleteUser(user.id)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-trash" })]
+                        )
+                      ])
                     ])
                   })
                 ],
@@ -59190,14 +59233,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("a", { attrs: { href: "" } }, [
-        _c("i", { staticClass: "fa fa-edit" })
-      ]),
-      _vm._v(" "),
-      _c("a", { attrs: { href: "" } }, [
-        _c("i", { staticClass: "fa fa-trash" })
-      ])
+    return _c("a", { attrs: { href: "" } }, [
+      _c("i", { staticClass: "fa fa-edit" })
     ])
   },
   function() {
@@ -74055,8 +74092,8 @@ Vue.component(vform_src__WEBPACK_IMPORTED_MODULE_0__["AlertError"].name, vform_s
 
 
 
-window.swal = sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a;
-var toast = swal.mixin({
+window.Swal = sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a;
+var toast = sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a.mixin({
   toast: true,
   position: 'top-end',
   showConfirmButton: false,

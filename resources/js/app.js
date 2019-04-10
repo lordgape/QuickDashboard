@@ -19,10 +19,10 @@ import VueRouter from 'vue-router'
 import VueProgressBar from 'vue-progressbar'
 import Swal from 'sweetalert2'
 
-window.swal = Swal;
+window.Swal = Swal;
 
 
-const toast = swal.mixin({
+const toast = Swal.mixin({
     toast: true,
     position: 'top-end',
     showConfirmButton: false,
