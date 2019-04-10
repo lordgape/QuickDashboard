@@ -16,6 +16,13 @@ Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
 
 import VueRouter from 'vue-router'
+import VueProgressBar from 'vue-progressbar'
+
+Vue.use(VueProgressBar, {
+    color: 'rgb(255, 14, 199)',
+    failedColor: 'red',
+    height: '3px'
+})
 
 Vue.use(VueRouter)
 
