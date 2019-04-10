@@ -2033,28 +2033,35 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     createUser: function createUser() {
+      var _this2 = this;
+
       this.$Progress.start();
       this.form.post('api/users').then(function (data) {
-        console.log('Laradata', data);
+        Fire.$emit("loadUserEvent");
         $('#addNewUserModal').modal('hide');
         toast.fire({
           type: 'success',
           title: "User Created Successfully"
         });
-        this.$Progress.finish();
-      }, function (err) {
-        console.log('LaraError', err);
+
+        _this2.$Progress.finish();
+      })["catch"](function (err) {
+        _this2.$Progress.fail();
+
         toast.fire({
           type: 'error',
           title: "Fail to create user"
         });
-        this.$Progress.finish();
       });
-      this.$Progress.finish();
     }
   },
   created: function created() {
+    var _this3 = this;
+
     this.getUsers();
+    Fire.$on("loadUserEvent", function () {
+      _this3.getUsers();
+    });
   },
   mounted: function mounted() {
     console.log('Component mounted.');
@@ -74082,7 +74089,9 @@ var routes = [{
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
+Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]); // Event Instance of Vue
+
+window.Fire = new Vue();
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]({
   mode: 'history',
   routes: routes // short for `routes: routes`

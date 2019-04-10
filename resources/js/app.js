@@ -58,6 +58,10 @@ let routes = [
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
+// Event Instance of Vue
+
+window.Fire = new Vue();
+
 
 const router = new VueRouter({
     mode: 'history',

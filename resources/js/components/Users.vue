@@ -151,9 +151,9 @@
           createUser(){
                 this.$Progress.start();
                 this.form.post('api/users')
-                    .then(function (data) {
+                    .then((data) => {
 
-                        console.log('Laradata',data);
+                        Fire.$emit("loadUserEvent");
 
                         $('#addNewUserModal').modal('hide');
 
@@ -164,25 +164,29 @@
 
                         this.$Progress.finish()
 
-                    },function (err) {
+                    })
+                    .catch((err) => {
 
-                        console.log('LaraError',err);
+                        this.$Progress.fail();
 
                         toast.fire({
                             type:'error',
                             title: "Fail to create user"
                         });
 
-                        this.$Progress.finish()
-                    });
+
+
+                     });
 
 
 
-                this.$Progress.finish()
+
             }
         },
         created(){
             this.getUsers();
+
+            Fire.$on("loadUserEvent",() => { this.getUsers()})
         },
         mounted() {
             console.log('Component mounted.')
