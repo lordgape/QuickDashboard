@@ -57,11 +57,14 @@
                         </button>
                     </div>
 
+                    <!-- Users form start here -->
+                    <form @submit.prevent="createUser">
+
                     <div class="modal-body">
 
                         <div class="form-group">
                             <label>Name</label>
-                            <input v-model="form.name" type="text" name="name"
+                            <input required v-model="form.name" type="text" name="name"
                                    class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
                             <has-error :form="form" field="name"></has-error>
                         </div>
@@ -74,7 +77,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Email</label>
+                            <label>Password</label>
                             <input v-model="form.password" type="password" name="password"
                                    class="form-control" :class="{ 'is-invalid': form.errors.has('password') }">
                             <has-error :form="form" field="password"></has-error>
@@ -102,8 +105,11 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Create</button>
+                        <button :disabled="form.busy" type="submit" class="btn btn-primary">Create</button>
                     </div>
+
+                    </form>
+
                 </div>
             </div>
         </div>
@@ -125,6 +131,11 @@
                   photo:''
               })
           }
+        },
+        methods: {
+          createUser(){
+                this.form.post('api/users');
+            }
         },
         mounted() {
             console.log('Component mounted.')
