@@ -53,14 +53,15 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add New</h5>
+                        <h5 v-show="!editMode" class="modal-title" id="exampleModalLabel">Add New</h5>
+                        <h5 v-show="editMode" class="modal-title" id="updateModalLabel">Update User's Info</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
 
                     <!-- Users form start here -->
-                    <form @submit.prevent="createUser">
+                    <form @submit.prevent="editMode ? updateUser() : createUser() ">
 
                     <div class="modal-body">
 
@@ -78,14 +79,14 @@
                             <has-error :form="form" field="email"></has-error>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" v-show="!editMode">
                             <label>Password</label>
                             <input v-model="form.password" type="password" name="password"
                                    class="form-control" :class="{ 'is-invalid': form.errors.has('password') }">
                             <has-error :form="form" field="password"></has-error>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" v-show="!editMode">
                             <label>Confirm Password</label>
                             <input v-model="form.password_confirmation" type="password" name="password_confirmation"
                                    class="form-control" :class="{ 'is-invalid': form.errors.has('password_confirmation') }">
@@ -113,8 +114,12 @@
 
                     </div>
                     <div class="modal-footer">
+
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button :disabled="form.busy" type="submit" class="btn btn-primary">Create</button>
+
+                        <button v-show="editMode" :disabled="form.busy" type="submit" class="btn btn-success">Update</button>
+                        <button v-show="!editMode" :disabled="form.busy" type="submit" class="btn btn-primary">Create</button>
+
                     </div>
 
                     </form>
@@ -131,8 +136,10 @@
     export default {
         data(){
           return {
+              editMode:false,
               users: {},
               form : new Form({
+                  id:'',
                   name:'',
                   email:'',
                   password:'',
@@ -147,16 +154,55 @@
 
           addNewUser(){
 
+            this.editMode = false;
+
+            this.form.clear();
             this.form.reset();
+
             $("#userModal").modal('show');
 
 
           },
 
           editUser(user){
-              this.form.reset();
-              this.form.fill(user);
+
+              this.editMode = true;
+
+              this.form.clear(); // remove all error on form
+              this.form.reset(); // remove all form data
+              this.form.fill(user); // Populate form with new data
+
               $("#userModal").modal('show');
+          },
+
+          updateUser()
+          {
+                this.$Progress.start();
+
+                this.form.put("api/users/" + this.form.id)
+                    .then(() => {
+
+                        Fire.$emit("loadUserEvent");
+
+                        toast.fire({
+                            type:"success",
+                            title:"Update was successfully"
+                        });
+
+                        $("#userModal").modal('hide');
+
+                        this.$Progress.finish()
+
+                    })
+                    .catch(()=>{
+
+                        toast.fire({
+                            type:'error',
+                            title: "Oops!! Fail to Update User"
+                        });
+
+                        this.$Progress.fail();
+                    });
           },
 
           deleteUser(id){
@@ -239,6 +285,7 @@
             }
         },
         created(){
+
             this.getUsers();
 
             Fire.$on("loadUserEvent",() => { this.getUsers()})

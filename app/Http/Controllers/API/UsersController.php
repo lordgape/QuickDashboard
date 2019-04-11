@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Resources\UserResource;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -82,7 +83,20 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $this->validate($request,[
+            "name" => "required|string|max:191",
+            "email" => "required|string|max:191|email|unique:users,email, " . $user->id,
+        ]);
+
+        $user->update($request->all());
+
+        $user = User::findOrFail($id);
+
+        return response(
+            new UserResource($user),Response::HTTP_OK
+        );
     }
 
     /**

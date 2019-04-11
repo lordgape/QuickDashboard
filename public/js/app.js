@@ -2008,11 +2008,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      editMode: false,
       users: {},
       form: new Form({
+        id: '',
         name: '',
         email: '',
         password: '',
@@ -2025,16 +2032,45 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     addNewUser: function addNewUser() {
+      this.editMode = false;
+      this.form.clear();
       this.form.reset();
       $("#userModal").modal('show');
     },
     editUser: function editUser(user) {
-      this.form.reset();
-      this.form.fill(user);
+      this.editMode = true;
+      this.form.clear(); // remove all error on form
+
+      this.form.reset(); // remove all form data
+
+      this.form.fill(user); // Populate form with new data
+
       $("#userModal").modal('show');
     },
-    deleteUser: function deleteUser(id) {
+    updateUser: function updateUser() {
       var _this = this;
+
+      this.$Progress.start();
+      this.form.put("api/users/" + this.form.id).then(function () {
+        Fire.$emit("loadUserEvent");
+        toast.fire({
+          type: "success",
+          title: "Update was successfully"
+        });
+        $("#userModal").modal('hide');
+
+        _this.$Progress.finish();
+      })["catch"](function () {
+        toast.fire({
+          type: 'error',
+          title: "Oops!! Fail to Update User"
+        });
+
+        _this.$Progress.fail();
+      });
+    },
+    deleteUser: function deleteUser(id) {
+      var _this2 = this;
 
       Swal.fire({
         title: 'Are you sure?',
@@ -2046,7 +2082,7 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonText: 'Yes, delete it!'
       }).then(function (result) {
         if (result.value) {
-          _this.form["delete"]("api/users/" + id).then(function () {
+          _this2.form["delete"]("api/users/" + id).then(function () {
             Fire.$emit("loadUserEvent");
             toast.fire({
               type: 'success',
@@ -2062,15 +2098,15 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getUsers: function getUsers() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.get('api/users').then(function (_ref) {
         var data = _ref.data;
-        _this2.users = data.data;
+        _this3.users = data.data;
       });
     },
     createUser: function createUser() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.$Progress.start();
       this.form.post('api/users').then(function (data) {
@@ -2081,9 +2117,9 @@ __webpack_require__.r(__webpack_exports__);
           title: "User Created Successfully"
         });
 
-        _this3.$Progress.finish();
+        _this4.$Progress.finish();
       })["catch"](function (err) {
-        _this3.$Progress.fail();
+        _this4.$Progress.fail();
 
         toast.fire({
           type: 'error',
@@ -2093,11 +2129,11 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    var _this4 = this;
+    var _this5 = this;
 
     this.getUsers();
     Fire.$on("loadUserEvent", function () {
-      _this4.getUsers();
+      _this5.getUsers();
     });
   },
   mounted: function mounted() {
@@ -58915,7 +58951,43 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(1),
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: !_vm.editMode,
+                        expression: "!editMode"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "exampleModalLabel" }
+                  },
+                  [_vm._v("Add New")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.editMode,
+                        expression: "editMode"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "updateModalLabel" }
+                  },
+                  [_vm._v("Update User's Info")]
+                ),
+                _vm._v(" "),
+                _vm._m(1)
+              ]),
               _vm._v(" "),
               _c(
                 "form",
@@ -58923,7 +58995,7 @@ var render = function() {
                   on: {
                     submit: function($event) {
                       $event.preventDefault()
-                      return _vm.createUser($event)
+                      _vm.editMode ? _vm.updateUser() : _vm.createUser()
                     }
                   }
                 },
@@ -59003,7 +59075,17 @@ var render = function() {
                     _vm._v(" "),
                     _c(
                       "div",
-                      { staticClass: "form-group" },
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: !_vm.editMode,
+                            expression: "!editMode"
+                          }
+                        ],
+                        staticClass: "form-group"
+                      },
                       [
                         _c("label", [_vm._v("Password")]),
                         _vm._v(" "),
@@ -59045,7 +59127,17 @@ var render = function() {
                     _vm._v(" "),
                     _c(
                       "div",
-                      { staticClass: "form-group" },
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: !_vm.editMode,
+                            expression: "!editMode"
+                          }
+                        ],
+                        staticClass: "form-group"
+                      },
                       [
                         _c("label", [_vm._v("Confirm Password")]),
                         _vm._v(" "),
@@ -59211,6 +59303,31 @@ var render = function() {
                     _c(
                       "button",
                       {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.editMode,
+                            expression: "editMode"
+                          }
+                        ],
+                        staticClass: "btn btn-success",
+                        attrs: { disabled: _vm.form.busy, type: "submit" }
+                      },
+                      [_vm._v("Update")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: !_vm.editMode,
+                            expression: "!editMode"
+                          }
+                        ],
                         staticClass: "btn btn-primary",
                         attrs: { disabled: _vm.form.busy, type: "submit" }
                       },
@@ -59247,26 +59364,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "h5",
-        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-        [_vm._v("Add New")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
   }
 ]
 render._withStripped = true
