@@ -8,7 +8,7 @@
                         <h3 class="card-title">Users</h3>
 
                         <div class="card-tools">
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#addNewUserModal">Add New</button>
+                            <button class="btn btn-primary" @click="addNewUser">Add New</button>
                         </div>
                     </div>
                     <!-- /.card-header -->
@@ -27,7 +27,7 @@
                                 <td>{{user.type | capFirstLetter}}</td>
                                 <td>{{user.created_at | companyDateFormat}}</td>
                                 <td>
-                                    <a href="">
+                                    <a href="#" @click="editUser(user)">
                                         <i class="fa fa-edit"></i>
                                     </a>
 
@@ -49,7 +49,7 @@
         <!-- User Modal -->
 
         <!-- Modal -->
-        <div class="modal fade" id="addNewUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -145,6 +145,20 @@
         },
         methods: {
 
+          addNewUser(){
+
+            this.form.reset();
+            $("#userModal").modal('show');
+
+
+          },
+
+          editUser(user){
+              this.form.reset();
+              this.form.fill(user);
+              $("#userModal").modal('show');
+          },
+
           deleteUser(id){
 
 
@@ -196,7 +210,7 @@
 
                         Fire.$emit("loadUserEvent");
 
-                        $('#addNewUserModal').modal('hide');
+                        $('#userModal').modal('hide');
 
                         toast.fire({
                             type:'success',
