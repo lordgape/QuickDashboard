@@ -102,7 +102,7 @@
                                     <label for="photo" class="col-sm-2 control-label">Profile photo</label>
 
                                     <div class="col-sm-10">
-                                        <input type="file" style="border:none;padding-left: 0px" class="form-control" id="photo" >
+                                        <input type="file" @change="updatePhoto" style="border:none;padding-left: 0px" class="form-control" id="photo" >
                                     </div>
                                 </div>
 
@@ -146,6 +146,20 @@
                     bio:'',
                     photo:''
                 })
+            }
+        },
+
+        methods: {
+
+            updatePhoto(element)
+            {
+                let file = element.target.files[0];
+                let reader = new FileReader();
+                reader.onloadend = () => {
+
+                    this.form.photo = reader.result;
+                };
+                reader.readAsDataURL(file);
             }
         },
 
