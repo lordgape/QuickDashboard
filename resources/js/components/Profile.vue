@@ -80,14 +80,14 @@
                                     <label for="inputName" class="col-sm-2 control-label">Name</label>
 
                                     <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="inputName" placeholder="Name">
+                                        <input type="text" v-model="form.name" class="form-control" id="inputName" placeholder="Name">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputEmail" class="col-sm-2 control-label">Email</label>
 
                                     <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                                        <input type="email" v-model="form.email"  class="form-control" id="inputEmail" placeholder="Email">
                                     </div>
                                 </div>
 
@@ -95,7 +95,7 @@
                                     <label for="inputExperience" class="col-sm-2 control-label">Experience</label>
 
                                     <div class="col-sm-10">
-                                        <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
+                                        <textarea class="form-control" v-model="form.bio" id="inputExperience" placeholder="Experience"></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -107,7 +107,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="password" class="col-sm-4 control-label">Password(Leave empty if not changing)</label>
+                                    <label for="password" class="col-sm-4 control-label">Password ( Leave empty if not changing )</label>
 
                                     <div class="col-sm-10">
                                         <input type="password" class="form-control" id="password" >
@@ -133,6 +133,30 @@
 
 <script>
     export default {
+        data() {
+
+            return {
+
+                form : new Form({
+                    id:'',
+                    name:'',
+                    email:'',
+                    password:'',
+                    type:'',
+                    bio:'',
+                    photo:''
+                })
+            }
+        },
+
+        created() {
+            axios.get("api/profile")
+                .then(({data}) => (this.form.fill(data)))
+                .catch((err) => {
+                    console.log("error",err);
+                });
+        },
+
         mounted() {
             console.log('Component mounted.')
         }

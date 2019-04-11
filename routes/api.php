@@ -18,3 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('/users', 'API\UsersController');
+
+Route::get('/profile', 'API\UsersController@profile');

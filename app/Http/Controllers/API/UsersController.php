@@ -81,6 +81,17 @@ class UsersController extends Controller
     }
 
     /**
+     * Return authenitcated user info
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function profile()
+    {
+        return auth('api')->user();
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
