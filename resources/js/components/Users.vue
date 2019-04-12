@@ -108,7 +108,7 @@
                         <div class="form-group">
                             <label>Bio</label>
                             <textarea v-model="form.bio"  name="bio"
-                                      class="form-control" :class="{ 'is-invalid': form.errors.has('type') }"></textarea>
+                                      class="form-control" :class="{ 'is-invalid': form.errors.has('bio') }"></textarea>
                             <has-error :form="form" field="type"></has-error>
                         </div>
 
