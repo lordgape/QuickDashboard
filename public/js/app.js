@@ -2025,25 +2025,46 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    updatePhoto: function updatePhoto(element) {
+    grabPhoto: function grabPhoto(element) {
       var _this = this;
 
       var file = element.target.files[0];
-      var reader = new FileReader();
 
-      reader.onloadend = function () {
-        _this.form.photo = reader.result;
-      };
+      if (file['size'] < 2097152) {
+        var reader = new FileReader();
 
-      reader.readAsDataURL(file);
+        reader.onloadend = function () {
+          _this.form.photo = reader.result;
+        };
+
+        reader.readAsDataURL(file);
+      } else {
+        Swal.fire({
+          title: 'Image Upload Error',
+          text: "Uploaded image cannot be more than 2M in size",
+          type: 'error'
+        });
+      }
+    },
+    üpdateProfile: function pdateProfile() {
+      var _this2 = this;
+
+      this.$Progress.start();
+      this.form.put('api/profile').then(function (_ref) {
+        var data = _ref.data;
+
+        _this2.$Progress.finish();
+      })["catch"](function (err) {
+        _this2.$Progress.fail();
+      });
     }
   },
   created: function created() {
-    var _this2 = this;
+    var _this3 = this;
 
-    axios.get("api/profile").then(function (_ref) {
-      var data = _ref.data;
-      return _this2.form.fill(data);
+    axios.get("api/profile").then(function (_ref2) {
+      var data = _ref2.data;
+      return _this3.form.fill(data);
     })["catch"](function (err) {
       console.log("error", err);
     });
@@ -60748,14 +60769,31 @@ var render = function() {
                             "padding-left": "0px"
                           },
                           attrs: { type: "file", id: "photo" },
-                          on: { change: _vm.updatePhoto }
+                          on: { change: _vm.grabPhoto }
                         })
                       ])
                     ]),
                     _vm._v(" "),
                     _vm._m(3),
                     _vm._v(" "),
-                    _vm._m(4)
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("div", { staticClass: "col-sm-offset-2 col-sm-10" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-success",
+                            attrs: { type: "submit" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.üpdateProfile()
+                              }
+                            }
+                          },
+                          [_vm._v("Update")]
+                        )
+                      ])
+                    ])
                   ])
                 ]
               )
@@ -60886,7 +60924,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "form-group" }, [
       _c(
         "label",
-        { staticClass: "col-sm-4 control-label", attrs: { for: "password" } },
+        { staticClass: "col-sm-10 control-label", attrs: { for: "password" } },
         [_vm._v("Password ( Leave empty if not changing )")]
       ),
       _vm._v(" "),
@@ -60895,20 +60933,6 @@ var staticRenderFns = [
           staticClass: "form-control",
           attrs: { type: "password", id: "password" }
         })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("div", { staticClass: "col-sm-offset-2 col-sm-10" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-success", attrs: { type: "submit" } },
-          [_vm._v("Update")]
-        )
       ])
     ])
   }

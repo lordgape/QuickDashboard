@@ -102,12 +102,12 @@
                                     <label for="photo" class="col-sm-2 control-label">Profile photo</label>
 
                                     <div class="col-sm-10">
-                                        <input type="file" @change="updatePhoto" style="border:none;padding-left: 0px" class="form-control" id="photo" >
+                                        <input type="file" @change="grabPhoto" style="border:none;padding-left: 0px" class="form-control" id="photo" >
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="password" class="col-sm-4 control-label">Password ( Leave empty if not changing )</label>
+                                    <label for="password" class="col-sm-10 control-label">Password ( Leave empty if not changing )</label>
 
                                     <div class="col-sm-10">
                                         <input type="password" class="form-control" id="password" >
@@ -116,7 +116,7 @@
 
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-10">
-                                        <button type="submit" class="btn btn-success">Update</button>
+                                        <button @click.prevent="üpdateProfile()" type="submit" class="btn btn-success">Update</button>
                                     </div>
                                 </div>
                             </form>
@@ -151,15 +151,45 @@
 
         methods: {
 
-            updatePhoto(element)
+            grabPhoto(element)
             {
                 let file = element.target.files[0];
-                let reader = new FileReader();
-                reader.onloadend = () => {
 
-                    this.form.photo = reader.result;
-                };
-                reader.readAsDataURL(file);
+
+                if(file['size'] < 2097152) {
+                    let reader = new FileReader();
+                    reader.onloadend = () => {
+
+                        this.form.photo = reader.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+                else
+                {
+
+                    Swal.fire({
+                        title: 'Image Upload Error',
+                        text: "Uploaded image cannot be more than 2M in size",
+                        type: 'error',
+                    });
+                }
+            },
+
+            üpdateProfile()
+            {
+                this.$Progress.start();
+
+                this.form.put('api/profile')
+                    .then(({data}) => {
+
+
+
+                        this.$Progress.finish();
+                    })
+                    .catch((err) => {
+
+                        this.$Progress.fail();
+                    });
             }
         },
 
