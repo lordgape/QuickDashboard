@@ -1797,6 +1797,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: "dashboard",
   mounted: function mounted() {
     console.log('Component mounted.');
   }
@@ -1828,6 +1829,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: "developer",
   mounted: function mounted() {
     console.log('Component mounted.');
   }
@@ -2029,6 +2031,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: "profile",
   data: function data() {
     return {
       photoUrl: '',
@@ -2257,6 +2260,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: "users",
   data: function data() {
     return {
       editMode: false,
@@ -77455,11 +77459,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vform_src__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vform/src */ "./node_modules/vform/src/index.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var vue_progressbar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-progressbar */ "./node_modules/vue-progressbar/dist/vue-progressbar.js");
-/* harmony import */ var vue_progressbar__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_progressbar__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _components_Dashboard_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/Dashboard.vue */ "./resources/js/components/Dashboard.vue");
+/* harmony import */ var _components_Profile_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Profile.vue */ "./resources/js/components/Profile.vue");
+/* harmony import */ var _components_Developer_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/Developer.vue */ "./resources/js/components/Developer.vue");
+/* harmony import */ var _components_Users_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/Users.vue */ "./resources/js/components/Users.vue");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var vue_progressbar__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue-progressbar */ "./node_modules/vue-progressbar/dist/vue-progressbar.js");
+/* harmony import */ var vue_progressbar__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(vue_progressbar__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_8__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -77470,38 +77478,42 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 
 
+
+
+
+
 window.Form = vform_src__WEBPACK_IMPORTED_MODULE_0__["Form"];
 Vue.component(vform_src__WEBPACK_IMPORTED_MODULE_0__["HasError"].name, vform_src__WEBPACK_IMPORTED_MODULE_0__["HasError"]);
 Vue.component(vform_src__WEBPACK_IMPORTED_MODULE_0__["AlertError"].name, vform_src__WEBPACK_IMPORTED_MODULE_0__["AlertError"]);
 
 
 
-window.Swal = sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a;
-var toast = sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a.mixin({
+window.Swal = sweetalert2__WEBPACK_IMPORTED_MODULE_8___default.a;
+var toast = sweetalert2__WEBPACK_IMPORTED_MODULE_8___default.a.mixin({
   toast: true,
   position: 'top-end',
   showConfirmButton: false,
   timer: 3000
 });
 window.toast = toast;
-Vue.use(vue_progressbar__WEBPACK_IMPORTED_MODULE_3___default.a, {
+Vue.use(vue_progressbar__WEBPACK_IMPORTED_MODULE_7___default.a, {
   color: 'rgb(144, 255, 199)',
   failedColor: 'red',
   height: '3px'
 });
-Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]);
+Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_6__["default"]);
 var routes = [{
   path: '/dashboard',
-  component: __webpack_require__(/*! ./components/Dashboard.vue */ "./resources/js/components/Dashboard.vue")["default"]
+  component: _components_Dashboard_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
 }, {
   path: '/profile',
-  component: __webpack_require__(/*! ./components/Profile.vue */ "./resources/js/components/Profile.vue")["default"]
+  component: _components_Profile_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
 }, {
   path: '/developer',
-  component: __webpack_require__(/*! ./components/Developer.vue */ "./resources/js/components/Developer.vue")["default"]
+  component: _components_Developer_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
 }, {
   path: '/users',
-  component: __webpack_require__(/*! ./components/Users.vue */ "./resources/js/components/Users.vue")["default"]
+  component: _components_Users_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
 }];
 /**
  * The following block of code may be used to automatically register your
@@ -77519,7 +77531,7 @@ Vue.component('passport-authorized-clients', __webpack_require__(/*! ./component
 Vue.component('passport-personal-access-tokens', __webpack_require__(/*! ./components/passport/PersonalAccessTokens.vue */ "./resources/js/components/passport/PersonalAccessTokens.vue")["default"]); // Event Instance of Vue
 
 window.Fire = new Vue();
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]({
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_6__["default"]({
   mode: 'history',
   routes: routes // short for `routes: routes`
 

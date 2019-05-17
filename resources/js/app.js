@@ -11,6 +11,13 @@ window.Vue = require('vue');
 import { Form, HasError, AlertError } from 'vform/src'
 import moment from 'moment'
 
+import dashboard from './components/Dashboard.vue'
+import profile from './components/Profile.vue'
+import developer from './components/Developer.vue'
+import users from './components/Users.vue'
+
+
+
 window.Form = Form;
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
@@ -40,10 +47,10 @@ Vue.use(VueProgressBar, {
 Vue.use(VueRouter)
 
 let routes = [
-    { path: '/dashboard', component: require('./components/Dashboard.vue').default },
-    { path: '/profile', component: require('./components/Profile.vue').default },
-    { path: '/developer', component: require('./components/Developer.vue').default },
-    { path: '/users', component: require('./components/Users.vue').default }
+    { path: '/dashboard', component: dashboard },
+    { path: '/profile', component: profile },
+    { path: '/developer', component: developer },
+    { path: '/users', component: users }
 ]
 
 /**
